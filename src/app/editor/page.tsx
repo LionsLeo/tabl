@@ -27,10 +27,24 @@ function EditorContent() {
     }
 
     return (
-        <div className="h-screen w-full flex flex-col bg-background overflow-hidden">
+        <div className="h-screen w-full flex flex-col bg-background overflow-hidden relative p-4 gap-4">
+            {/* ── Background radial glows ── */}
+            <div
+                aria-hidden
+                className="pointer-events-none fixed inset-0 z-0"
+                style={{
+                    background: `
+            radial-gradient(ellipse 100% 60% at 10% -10%, color-mix(in oklch, var(--primary) 30%, transparent) 0%, transparent 70%),
+            radial-gradient(ellipse 60% 40% at 90% 110%, color-mix(in oklch, var(--primary) 15%, transparent) 0%, transparent 60%)
+          `,
+                }}
+            />
+
             <EditorToolbar />
-            <div className="flex-1 flex min-h-0 relative">
-                <EditorCanvas />
+            <div className="flex-1 flex min-h-0 relative z-10 gap-4">
+                <div className="flex-1 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-md shadow-lg overflow-hidden relative">
+                    <EditorCanvas />
+                </div>
                 <PropertiesPanel />
             </div>
         </div>

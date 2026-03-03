@@ -9,25 +9,30 @@ export const TableNode = memo(({ data, selected }: NodeProps<any>) => {
 
     return (
         <div
-            className={`bg-card text-card-foreground rounded-md w-[260px] shadow-sm border overflow-hidden
-        ${selected ? 'ring-2 ring-primary border-primary' : 'border-border/60 hover:border-primary/50'}
-        transition-colors
+            className={`group relative bg-card text-card-foreground rounded-xl w-[260px] overflow-hidden transition-all duration-200
+        ${selected ? 'border-primary shadow-lg shadow-primary/10 ring-1 ring-primary' : 'border-border/60 hover:border-primary/50 shadow-sm'}
+        border
       `}
         >
+            {/* Gradient glow on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent transition-all duration-300 pointer-events-none" />
+
+            {/* Top accent line */}
+            <div className={`h-[2px] w-full ${table.color ? '' : 'bg-gradient-to-r from-primary/80 via-primary/40 to-transparent'}`} style={{ backgroundColor: table.color }} />
+
             <div
-                className="px-3 py-2 border-b font-medium text-sm flex items-center justify-between"
+                className="px-4 py-3 border-b font-semibold text-sm flex items-center justify-between bg-muted/10"
                 style={{
-                    backgroundColor: table.color ? `${table.color}20` : 'var(--muted)',
-                    borderBottomColor: table.color ? `${table.color}40` : 'var(--border)',
+                    borderBottomColor: table.color ? `${table.color}30` : 'var(--border)',
                 }}
             >
-                <div className="flex items-center space-x-2 truncate">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: table.color || 'var(--foreground)' }} />
-                    <span className="truncate">{table.name}</span>
+                <div className="flex items-center space-x-2.5 truncate">
+                    <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: table.color || 'var(--foreground)' }} />
+                    <span className="truncate tracking-tight">{table.name}</span>
                 </div>
             </div>
 
-            <div className="p-1 space-y-0.5 max-h-[300px] overflow-y-auto w-full node-content">
+            <div className="p-1.5 space-y-0.5 max-h-[300px] overflow-y-auto w-full node-content relative z-10 bg-background/30 backdrop-blur-sm">
                 {table.columns.map((col) => (
                     <div
                         key={col.id}
