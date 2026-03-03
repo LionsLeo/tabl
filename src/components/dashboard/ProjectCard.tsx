@@ -1,7 +1,8 @@
+'use client';
+
 import { Project } from '@/types';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { formatDistanceToNow } from 'date-fns';
-import { Database, MoreVertical, Trash2, Edit2, Copy } from 'lucide-react';
+import { Database, MoreVertical, Trash2, Edit2, Copy, Clock } from 'lucide-react';
 import {
     DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
@@ -31,21 +32,59 @@ export function ProjectCard({ project }: ProjectCardProps) {
     const timeAgo = formatDistanceToNow(new Date(project.updatedAt), { addSuffix: true });
 
     return (
-        <Card
-            className="group cursor-pointer hover:border-primary/50 transition-all hover:shadow-md hover:shadow-primary/5 relative overflow-hidden"
+        <div
             onClick={onClick}
+            className="group relative cursor-pointer rounded-xl border border-border/60 bg-card overflow-hidden transition-all duration-200 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/8 hover:-translate-y-0.5"
         >
-            <CardHeader className="pb-3 border-b border-white/5 bg-white/[0.02]">
-                <div className="flex justify-between items-start">
-                    <div className="flex items-center space-x-2">
-                        <div className="p-2 bg-primary/10 rounded-md">
-                            <Database className="w-5 h-5 text-primary" />
-                        </div>
-                        <CardTitle className="text-base truncate max-w-[180px]">{project.name}</CardTitle>
+            {/* Gradient glow on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent transition-all duration-300 pointer-events-none" />
+
+            {/* Top accent line */}
+            <div className="h-[2px] w-full bg-gradient-to-r from-primary/80 via-primary/40 to-transparent" />
+
+            {/* Body */}
+            <div className="p-5 flex flex-col gap-3">
+
+                {/* Header: icon + name + menu — all on same flex row */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    {/* Icon box */}
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '34px',
+                        height: '34px',
+                        flexShrink: 0,
+                        borderRadius: '8px',
+                        background: 'color-mix(in oklch, var(--primary) 12%, transparent)',
+                    }}>
+                        <Database style={{ width: '15px', height: '15px', color: 'var(--primary)' }} />
                     </div>
+
+                    {/* Project name */}
+                    <span style={{
+                        flex: 1,
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        lineHeight: 1,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        color: 'var(--foreground)',
+                    }}>
+                        {project.name}
+                    </span>
+
+                    {/* Menu button */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                style={{ width: '28px', height: '28px', flexShrink: 0 }}
+                                className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-foreground"
+                                onClick={(e) => e.stopPropagation()}
+                            >
                                 <MoreVertical className="h-4 w-4" />
                                 <span className="sr-only">Open menu</span>
                             </Button>
@@ -60,22 +99,28 @@ export function ProjectCard({ project }: ProjectCardProps) {
                                 <span>Duplicate (Soon)</span>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:bg-destructive focus:text-destructive-foreground">
+                            <DropdownMenuItem
+                                onClick={handleDelete}
+                                className="text-destructive focus:bg-destructive focus:text-destructive-foreground"
+                            >
                                 <Trash2 className="mr-2 h-4 w-4" />
                                 <span>Delete</span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-            </CardHeader>
-            <CardContent className="pt-4 h-[80px]">
-                <CardDescription className="line-clamp-2">
+
+                {/* Description */}
+                <p className="text-xs text-muted-foreground line-clamp-2 min-h-[2.5rem] leading-relaxed">
                     {project.description || 'No description provided.'}
-                </CardDescription>
-            </CardContent>
-            <CardFooter className="pt-2 pb-4 text-xs text-muted-foreground flex justify-between items-center">
-                <span>Updated {timeAgo}</span>
-            </CardFooter>
-        </Card>
+                </p>
+
+                {/* Footer */}
+                <div className="pt-3 border-t border-border/40 flex items-center gap-1.5 text-[11px] text-muted-foreground/60">
+                    <Clock className="w-3 h-3 shrink-0" />
+                    <span>Updated {timeAgo}</span>
+                </div>
+            </div>
+        </div>
     );
 }
