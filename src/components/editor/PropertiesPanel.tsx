@@ -37,9 +37,15 @@ export function PropertiesPanel() {
 
     if (!activeTable && !activeRelationship) {
         return (
-            <div className="w-80 border-l bg-background/50 flex flex-col items-center justify-center text-center p-6 text-muted-foreground h-full">
-                <Settings2 className="w-12 h-12 mb-4 opacity-20" />
-                <p className="text-sm">Select a table or relationship on the canvas to view and edit its properties.</p>
+            <div className="w-80 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-md shadow-lg flex flex-col items-center justify-center text-center p-8 text-muted-foreground h-full z-20 relative overflow-hidden">
+                <div className="relative mb-6">
+                    <div className="absolute inset-0 rounded-full blur-xl bg-primary/20 scale-150" />
+                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 shadow-lg shadow-primary/5">
+                        <Settings2 className="w-7 h-7 text-primary" />
+                    </div>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2 tracking-tight">Properties</h3>
+                <p className="text-sm leading-relaxed max-w-[200px]">Select a table or relationship to view and edit its details.</p>
             </div>
         );
     }
@@ -49,7 +55,7 @@ export function PropertiesPanel() {
         const targetTable = tables.find(t => t.id === activeRelationship.targetTableId);
 
         return (
-            <div className="w-80 border-l bg-background h-full flex flex-col">
+            <div className="w-80 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-md shadow-lg h-full flex flex-col z-20 relative overflow-hidden">
                 <div className="p-4 border-b">
                     <h2 className="font-semibold">Edit Relationship</h2>
                 </div>
@@ -94,7 +100,7 @@ export function PropertiesPanel() {
 
     if (activeTable) {
         return (
-            <div className="w-80 lg:w-96 border-l bg-background h-full flex flex-col">
+            <div className="w-80 lg:w-96 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-md shadow-lg h-full flex flex-col z-20 relative overflow-hidden">
                 {/* Table Header Section */}
                 <div className="p-4 border-b space-y-4 shrink-0">
                     <div className="flex items-center justify-between">

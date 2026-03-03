@@ -32,7 +32,7 @@ export function EditorToolbar() {
 
     return (
         <>
-            <div className="h-14 border-b bg-background/95 backdrop-blur flex items-center justify-between px-4 z-10 relative">
+            <div className="h-14 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-md flex items-center justify-between px-6 z-20 relative shadow-lg">
                 <div className="flex items-center space-x-4">
                     <Button variant="ghost" size="icon" onClick={handleBack} className="text-muted-foreground hover:text-foreground">
                         <ChevronLeft className="h-5 w-5" />
